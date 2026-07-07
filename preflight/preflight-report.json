@@ -1,0 +1,87 @@
+{
+  "package": "bradspelsdesigner-gpt-knowledge-preflight-10B",
+  "date": "2026-07-07",
+  "overall_ok": true,
+  "instruction_character_count": 4626,
+  "instruction_character_limit": 8000,
+  "knowledge_upload_file_count": 15,
+  "knowledge_upload_file_limit": 20,
+  "recommended_upload_files": [
+    "01-gpt-role-and-working-style.md",
+    "02-boardgame-project-standard.md",
+    "03-component-design-guide.md",
+    "04-game-category-patterns.md",
+    "05-print-and-play-production-guide.md",
+    "06-rulebook-structure-standard.md",
+    "07-playtest-and-balancing-guide.md",
+    "08-example-project-pattern.md",
+    "09-mechanics-and-balance-patterns.md",
+    "10-blindtest-and-rule-clarity-guide.md",
+    "11-component-economy-and-production-tradeoffs.md",
+    "12-llm-boardgame-design-workflow.md",
+    "13-existing-game-analysis-framework.md",
+    "14-first-time-designer-guided-workflow.md",
+    "KNOWLEDGE_INDEX.md"
+  ],
+  "numbered_knowledge_files": [
+    "01-gpt-role-and-working-style.md",
+    "02-boardgame-project-standard.md",
+    "03-component-design-guide.md",
+    "04-game-category-patterns.md",
+    "05-print-and-play-production-guide.md",
+    "06-rulebook-structure-standard.md",
+    "07-playtest-and-balancing-guide.md",
+    "08-example-project-pattern.md",
+    "09-mechanics-and-balance-patterns.md",
+    "10-blindtest-and-rule-clarity-guide.md",
+    "11-component-economy-and-production-tradeoffs.md",
+    "12-llm-boardgame-design-workflow.md",
+    "13-existing-game-analysis-framework.md",
+    "14-first-time-designer-guided-workflow.md"
+  ],
+  "checks": [
+    {
+      "id": "instruction_under_8000",
+      "label": "Slutlig instruktion är under 8000 tecken",
+      "ok": true,
+      "value": 4626,
+      "limit": 8000
+    },
+    {
+      "id": "knowledge_under_20",
+      "label": "Knowledge-filer för uppladdning är max 20",
+      "ok": true,
+      "value": 15,
+      "limit": 20
+    },
+    {
+      "id": "numbered_files_complete",
+      "label": "Alla 14 numrerade knowledge-filer finns",
+      "ok": true,
+      "value": 14,
+      "expected": 14,
+      "missing": [],
+      "extra": []
+    },
+    {
+      "id": "knowledge_index_present",
+      "label": "KNOWLEDGE_INDEX.md finns",
+      "ok": true,
+      "value": true
+    },
+    {
+      "id": "index_matches_upload",
+      "label": "Kunskapsindex matchar uppladdningsfilerna",
+      "ok": true,
+      "missing_from_index": [],
+      "mentioned_not_present": []
+    },
+    {
+      "id": "required_files_present",
+      "label": "Viktiga konfigurations- och testfiler finns",
+      "ok": true,
+      "missing": []
+    }
+  ],
+  "next_action": "Skapa GPT:n i GPT Builder om overall_ok är true."
+}

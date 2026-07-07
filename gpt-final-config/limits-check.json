@@ -1,0 +1,9 @@
+{
+  "instruction_character_limit": 8000,
+  "instruction_character_count": 4626,
+  "instruction_ok": true,
+  "knowledge_file_limit": 20,
+  "knowledge_file_count": 15,
+  "knowledge_ok": true,
+  "preflight_overall_ok": true
+}
