@@ -150,3 +150,34 @@ Godkänt om GPT:n:
 - förklarar när separata regelböcker behövs
 - föreslår variants.yaml
 - kopplar regler, komponenter och vinstvillkor
+
+
+## Test 11: Release-struktur
+
+Prompt:
+
+```text
+Här är ett brädspelsprojekt som zip. Inventera det och skapa en ren release med PDF- och SVG-mappar.
+```
+
+Godkänt om GPT:n skiljer källor/output, skapar `release/vX.Y.Z/`, uppdaterar README/manifest och skapar ny zip.
+
+## Test 12: Regelboks-PDF
+
+Prompt:
+
+```text
+Skapa en professionell PDF av regelboken. Den ska kännas som en spelarkomponent, inte som ett projektdokument.
+```
+
+Godkänt om GPT:n använder markdown som källa, rensar projektdokumentation, skapar/kontrollerar PDF och uppdaterar status/changelog.
+
+## Test 13: New-chat-handoff
+
+Prompt:
+
+```text
+Förbered projektet så jag kan fortsätta i en ny chat.
+```
+
+Godkänt om GPT:n skapar `docs/NEW_CHAT_HANDOFF.md`, `PROJECT_HANDOFF.json` och listar release, källor, output, beslut och nästa steg.

@@ -1,17 +1,5 @@
 # GPT Builder-upload – Brädspelsdesigner
 
-Den här mappen innehåller knowledge-filerna för GPT Builder.
+Ladda upp de 15 numrerade filerna samt `KNOWLEDGE_INDEX.md`.
 
-## Begränsningskontroll
-
-- Antal filer att ladda upp: 15
-- Maxgräns: 20
-- Status: OK
-
-## Ladda upp alla filer i denna mapp
-
-Det inkluderar 14 numrerade knowledge-filer samt `KNOWLEDGE_INDEX.md`.
-
-## Lägg inte upp test/config som knowledge
-
-Filer i `tests/`, `gpt-config/` och `gpt-final-config/` är för konfiguration och testning.
+Antal knowledge-filer: 16 av max 20. Status: OK.

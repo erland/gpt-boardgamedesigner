@@ -1,34 +1,20 @@
 # Kopiera detta till GPT Builder
 
-Detta dokument är den praktiska checklistan för att skapa GPT:n **Brädspelsdesigner**.
+## Namn
 
-## 1. Namn
-
-```text
 Brädspelsdesigner
-```
 
-## 2. Kort beskrivning
+## Instruktion
 
-```text
-Hjälper dig designa, strukturera och producera brädspel som print-and-play-projekt med regler, kort, spelplaner, markörer, playtest och uppdaterade zip-paket.
-```
-
-## 3. Instruktion
-
-Kopiera hela innehållet från:
+Kopiera från:
 
 ```text
 gpt-final-config/final-instructions-under-8000-chars.md
 ```
 
-Kontroll:
+Instruktion: 5004/8000 tecken.
 
-```text
-4626 tecken av max 8000
-```
-
-## 4. Knowledge
+## Knowledge
 
 Ladda upp alla filer i:
 
@@ -36,13 +22,7 @@ Ladda upp alla filer i:
 gpt-builder-upload/
 ```
 
-Antal filer:
-
-```text
-15 av max 20
-```
-
-Filer:
+Antal: 16/20.
 
 1. `01-gpt-role-and-working-style.md`
 2. `02-boardgame-project-standard.md`
@@ -58,43 +38,9 @@ Filer:
 12. `12-llm-boardgame-design-workflow.md`
 13. `13-existing-game-analysis-framework.md`
 14. `14-first-time-designer-guided-workflow.md`
-15. `KNOWLEDGE_INDEX.md`
+15. `15-release-and-build-workflow.md`
+16. `KNOWLEDGE_INDEX.md`
 
-## 5. Capabilities
+## Test
 
-Rekommenderat:
-
-- File uploads: på
-- Code Interpreter / Data Analysis: på
-- Image generation: på om GPT:n ska hjälpa med visuella koncept
-- Web browsing: på om GPT:n ska kunna ge aktuella material-/verktygs-/prisråd
-
-## 6. Samtalsstarter
-
-Kopiera från:
-
-```text
-gpt-final-config/final-conversation-starters.md
-```
-
-## 7. Test efter skapande
-
-Testa med:
-
-```text
-gpt-final-config/final-test-matrix.md
-```
-
-Prioritera dessa första tester:
-
-1. total nybörjare vill skapa första spel
-2. analysera projektzip
-3. skapa regelbok
-4. skapa A6-legendkort
-5. tolka playtestanteckningar
-
-## 8. Preflight-status
-
-```text
-GODKÄND
-```
+Kör `gpt-final-config/final-test-matrix.md` och `tests/release-and-build-workflow-test-prompts.md`.

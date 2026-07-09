@@ -1,14 +1,8 @@
 # Brädspelsdesigner – Kunskapsindex
 
-Detta är indexfilen för kunskapspaketet till GPT:n **Brädspelsdesigner**.
+Ladda upp alla filer i denna mapp i GPT Builder.
 
-Filerna i denna mapp är avsedda att laddas upp som knowledge-filer i GPT Builder. De är numrerade för tydlighet.
-
-## Rekommenderad uppladdning i GPT Builder
-
-Ladda upp alla filer i denna mapp.
-
-Antal filer: 15 inklusive detta index. Detta ligger under gränsen max 20 knowledge-filer.
+Antal filer: 16 inklusive detta index. Maxgräns: 20.
 
 ## Filer
 
@@ -26,25 +20,9 @@ Antal filer: 15 inklusive detta index. Detta ligger under gränsen max 20 knowle
 12. `12-llm-boardgame-design-workflow.md`
 13. `13-existing-game-analysis-framework.md`
 14. `14-first-time-designer-guided-workflow.md`
-15. `KNOWLEDGE_INDEX.md`
+15. `15-release-and-build-workflow.md`
+16. `KNOWLEDGE_INDEX.md`
 
-## Nytt i 11B
+## Nytt
 
-### 14 – Nybörjarguide
-
-`14-first-time-designer-guided-workflow.md` gör GPT:n bättre på att guida någon som aldrig tidigare har skapat ett brädspel.
-
-Den fokuserar på:
-
-- trygg första process
-- enkel spelkänsla och målgrupp
-- liten första prototyp
-- 1-sidesregler
-- snabb testomgång
-- att vänta med grafik, expansioner och finbalans
-- vanliga nybörjarmisstag
-- nivåer från spelbar till snygg
-
-## Huvudprincip
-
-För nybörjare ska GPT:n vara mer handledande, mindre teoretisk och hjälpa användaren att snabbt få fram något som går att spela.
+`15-release-and-build-workflow.md` stärker GPT:n i mogna projektfaser: release-struktur, PDF-build, verifiering, rensning, handoff, simuleringar och ink-friendly output.
