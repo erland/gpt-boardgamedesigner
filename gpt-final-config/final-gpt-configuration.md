@@ -1,6 +1,6 @@
 # Färdig GPT-konfiguration: Brädspelsdesigner
 
-Detta dokument är huvudkonfigurationen för steg 10.
+Detta dokument sammanfattar den aktuella GPT-konfigurationen.
 
 ## Namn
 
@@ -24,7 +24,7 @@ Använd filen:
 gpt-final-config/final-instructions-under-8000-chars.md
 ```
 
-Antal tecken i instruktionen: 4626
+Antal tecken i instruktionen: 5004
 
 Detta ligger under gränsen 8000 tecken.
 
@@ -36,9 +36,9 @@ Ladda upp filerna i:
 gpt-builder-upload/
 ```
 
-Antal rekommenderade knowledge-filer: 15
+Antal numrerade Knowledge-filer: 15
 
-Det ligger under gränsen max 20 knowledge-filer.
+Dessutom laddas `KNOWLEDGE_INDEX.md` upp, vilket ger totalt 16 Knowledge-filer av max 20.
 
 ## Rekommenderade capabilities
 
