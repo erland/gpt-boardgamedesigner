@@ -29,3 +29,28 @@ Detta paket bygger vidare på Preflight 10B och för in release-/build-förbätt
 ```text
 preflight/COPY_TO_GPT_BUILDER.md
 ```
+
+---
+
+## Portabel Chat-distribution och releaser
+
+Repositoryt kan nu bygga två distributioner från samma källor utan att ändra GPT:ns beteendestyrande filer:
+
+- `bradspelsdesigner-custom-gpt-vX.Y.Z.zip` – för GPT Builder. Den slutliga instruktionen, conversation starters och alla 16 Knowledge-filer kopieras byte-identiskt från de befintliga källorna.
+- `bradspelsdesigner-chat-vX.Y.Z.zip` – för en vanlig ChatGPT-konversation. Börja med `START-HERE.md`.
+
+Lokalt eller vid vanlig push/PR används versionen i `VERSION`:
+
+```bash
+python3 scripts/build_distributions.py
+python3 scripts/validate_distributions.py
+```
+
+Vid en publicerad GitHub Release används release-taggen som versionskälla. En release med taggen `v1.1.0` bygger och bifogar automatiskt:
+
+```text
+bradspelsdesigner-custom-gpt-v1.1.0.zip
+bradspelsdesigner-chat-v1.1.0.zip
+```
+
+Taggen måste följa `v<semver>`, exempelvis `v1.0.0` eller `v1.2.3`.
