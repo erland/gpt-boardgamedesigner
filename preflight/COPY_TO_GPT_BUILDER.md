@@ -43,4 +43,4 @@ Antal: 16/20.
 
 ## Test
 
-Kör `gpt-final-config/final-test-matrix.md` och `tests/release-and-build-workflow-test-prompts.md`.
+Kör `gpt-final-config/final-test-matrix.md`, `tests/all-test-prompts.md` och vid behov `tests/release-and-build-workflow-test-prompts.md`.

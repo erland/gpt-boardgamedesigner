@@ -1,42 +1,52 @@
-# Brädspelsdesigner GPT – Release-workflow-uppdatering
+# Brädspelsdesigner GPT
 
-Detta paket bygger vidare på Preflight 10B och för in release-/build-förbättringarna från den uppladdade analysen.
+Detta repository innehåller den aktuella konfigurationen och Knowledge för Custom GPT:n **Brädspelsdesigner**, tillsammans med stöd för portabel Chat-distribution och versionsmärkta GitHub Releases.
 
-## Nytt
+## Aktuell GPT-konfiguration
 
-- `knowledge/release-and-build-workflow.md`
-- `gpt-builder-upload/15-release-and-build-workflow.md`
-- uppdaterad `gpt-builder-upload/KNOWLEDGE_INDEX.md`
-- uppdaterad slutlig instruktion
-- uppdaterad testmatris
-- `tests/release-and-build-workflow-test-prompts.md`
-- `RELEASE_WORKFLOW_UPDATE_NOTES.md`
-- uppdaterad preflight-rapport
-
-## Preflight-status
-
-**GODKÄND**
-
-| Begränsning | Resultat |
-|---|---:|
-| Instruktion max 8000 tecken | OK |
-| Slutlig instruktion | 5004 tecken |
-| Knowledge-filer max 20 | OK |
-| Knowledge-filer att ladda upp | 16 filer |
-
-## Viktigaste fil inför GPT Builder
+Viktigaste filen inför GPT Builder är:
 
 ```text
 preflight/COPY_TO_GPT_BUILDER.md
 ```
 
----
+Den slutliga instruktionen finns i:
+
+```text
+gpt-final-config/final-instructions-under-8000-chars.md
+```
+
+Conversation starters finns i:
+
+```text
+gpt-final-config/final-conversation-starters.md
+```
+
+Knowledge som laddas upp finns i:
+
+```text
+gpt-builder-upload/
+```
+
+Mappen innehåller 15 numrerade Knowledge-filer samt `KNOWLEDGE_INDEX.md`, totalt 16 filer.
+
+## Aktuellt testunderlag
+
+- `gpt-final-config/final-test-matrix.md` – sammanfattad testmatris för GPT-konfigurationen.
+- `tests/all-test-prompts.md` – samlade regressionstestprompter.
+- `tests/release-and-build-workflow-test-prompts.md` – riktade tester för release-/build-arbetsflödet.
+
+Historiska stegvisa arbetsanteckningar och separata stegtestfiler ligger inte längre i repositoryt; Git-historiken används för dem.
+
+## Käll- och uppladdningsmaterial
+
+`knowledge/` innehåller de namngivna kunskapsdokumenten utan uppladdningsprefix. `gpt-builder-upload/` är den faktiska uppsättning som används vid installation i GPT Builder.
 
 ## Portabel Chat-distribution och releaser
 
-Repositoryt kan nu bygga två distributioner från samma källor utan att ändra GPT:ns beteendestyrande filer:
+Repositoryt bygger två distributioner från samma aktuella GPT-underlag:
 
-- `bradspelsdesigner-custom-gpt-vX.Y.Z.zip` – för GPT Builder. Den slutliga instruktionen, conversation starters och alla 16 Knowledge-filer kopieras byte-identiskt från de befintliga källorna.
+- `bradspelsdesigner-custom-gpt-vX.Y.Z.zip` – för GPT Builder. Slutlig instruktion, conversation starters och samtliga 16 Knowledge-filer kopieras byte-identiskt från källorna.
 - `bradspelsdesigner-chat-vX.Y.Z.zip` – för en vanlig ChatGPT-konversation. Börja med `START-HERE.md`.
 
 Lokalt eller vid vanlig push/PR används versionen i `VERSION`:
