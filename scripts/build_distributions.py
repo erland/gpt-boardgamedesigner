@@ -9,6 +9,7 @@ import shutil
 import tempfile
 import zipfile
 from pathlib import Path
+import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 SEMVER = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$")
@@ -140,9 +141,19 @@ def build_portable(stage: Path, version: str) -> None:
     write_manifest(stage, version)
 
 
+def registry_targets():
+    r=yaml.safe_load((ROOT/"runtime-distribution-registry.yaml").read_text(encoding="utf-8"))
+    targets=list(r.get("active_targets",[]) or [])
+    supported={"chat","custom-gpt"}
+    unknown=set(targets)-supported
+    if unknown:
+        raise SystemExit(f"Registry contains unsupported active targets: {sorted(unknown)}")
+    return targets
+
 def main() -> int:
     args = parse_args()
     version = resolve_version(args.version)
+    targets = registry_targets()
     validate_sources()
     out = (ROOT / args.output_dir).resolve() if not Path(args.output_dir).is_absolute() else Path(args.output_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -153,14 +164,19 @@ def main() -> int:
         custom = temp / "custom"
         portable = temp / "portable"
         custom.mkdir(); portable.mkdir()
-        build_custom(custom, version)
-        build_portable(portable, version)
-        custom_zip = out / f"bradspelsdesigner-custom-gpt-v{version}.zip"
-        portable_zip = out / f"bradspelsdesigner-chat-v{version}.zip"
-        zip_tree(custom, custom_zip)
-        zip_tree(portable, portable_zip)
-    print(f"Built {custom_zip}")
-    print(f"Built {portable_zip}")
+        built=[]
+        if "custom-gpt" in targets:
+            build_custom(custom, version)
+            custom_zip = out / f"bradspelsdesigner-custom-gpt-v{version}.zip"
+            zip_tree(custom, custom_zip)
+            built.append(custom_zip)
+        if "chat" in targets:
+            build_portable(portable, version)
+            portable_zip = out / f"bradspelsdesigner-chat-v{version}.zip"
+            zip_tree(portable, portable_zip)
+            built.append(portable_zip)
+    for p in built:
+        print(f"Built {p}")
     return 0
 
 if __name__ == "__main__":
