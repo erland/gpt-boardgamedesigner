@@ -1,0 +1,164 @@
+schema_version: 1
+project:
+  id: boardgamedesigner
+  name: Brädspelsdesigner
+  version: 1.0.0
+
+migration:
+  target_builder_version: 1.5.0
+  strategy: behavior_preserving
+  plan: docs/gpt-builder-1.5-runtime-migration.md
+  total_steps: 7
+
+progress:
+  current_step: 7
+  last_completed_step: 7
+  completed_steps:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+  skipped_steps: []
+
+preservation:
+  canonical_instruction: assistant/instructions.md
+  legacy_instruction_source: gpt-final-config/final-instructions-under-8000-chars.md
+  canonical_matches_legacy_byte_identical: true
+  preserve_version_1_0_0: true
+  preserve_knowledge_16_of_16: true
+  preserve_instruction_under_8000_chars: true
+  preserve_project_zip_workflow: true
+  preserve_source_vs_output_separation: true
+  preserve_project_status_and_changelog_updates: true
+  preserve_print_and_play_guidance: true
+  preserve_rulebook_structure: true
+  preserve_playtest_and_balance: true
+  preserve_guided_beginner_mode: true
+  preserve_release_build_workflow: true
+  preserve_preflight_and_test_assets: true
+
+gpt_builder_1_5:
+  normalized_contract: gpt-builder-1.5-contract.yaml
+  validation: scripts/validate_gpt_builder_1_5_contract.py
+  canonical_instruction: assistant/instructions.md
+  canonical_matches_legacy_instruction: true
+  project_zip_workflow_preserved: true
+  source_vs_output_separation_preserved: true
+  project_status_changelog_preserved: true
+  print_and_play_preserved: true
+  rulebook_design_preserved: true
+  playtest_and_balance_preserved: true
+  guided_beginner_mode_preserved: true
+  release_build_workflow_preserved: true
+  knowledge_16_of_16_preserved: true
+  version_1_0_0_preserved: true
+  status: passed
+
+chat_custom_normalization:
+  status: passed
+  canonical_instruction_source: assistant/instructions.md
+  custom_gpt_packaging_path: gpt-final-config/final-instructions-under-8000-chars.md
+  chat_instruction_path: assistant/instructions.md
+  both_built_from_same_canonical_source: true
+  knowledge_16_of_16_in_both: true
+  project_zip_markers_verified: true
+  source_output_separation_verified: true
+  project_status_changelog_verified: true
+  print_and_play_verified: true
+  playtest_balance_verified: true
+  version_1_0_0_preserved: true
+
+runtime_baseline:
+  active:
+    - chat
+    - custom-gpt
+  inactive:
+    claude:
+      compatibility: reduced
+      blocker: deterministic_file_edit_build_and_zip_parity_not_guaranteed
+      assessment: docs/claude-opencode-compatibility.md
+    opencode:
+      compatibility: equivalent
+      blocker: distribution_and_regression_not_implemented
+      assessment: docs/claude-opencode-compatibility.md
+  inactive:
+    openai_plugin:
+      compatibility: reduced
+      status: assessed_not_active
+      architecture: skills_first
+      activation: not_active
+      blocker: deterministic_file_edit_build_and_zip_parity_not_implemented
+      assessment: docs/openai-plugin-compatibility.md
+
+claude_opencode_assessment:
+  status: passed
+  assessment: docs/claude-opencode-compatibility.md
+  canonical_behavior_changed: false
+  claude:
+    compatibility: reduced
+    activation: not_active
+    blocker: deterministic_file_edit_build_and_zip_parity_not_guaranteed
+  opencode:
+    compatibility: equivalent
+    activation: not_active
+    blocker: distribution_and_regression_not_implemented
+
+plugin_assessment:
+  status: passed
+  runtime: openai_plugin
+  compatibility: reduced
+  architecture: skills_first
+  activation: not_active
+  blocker: deterministic_file_edit_build_and_zip_parity_not_implemented
+  assessment: docs/openai-plugin-compatibility.md
+  canonical_behavior_changed: false
+
+runtime_registry:
+  source_of_truth: runtime-distribution-registry.yaml
+  validation: scripts/validate_runtime_distribution_registry.py
+  active_targets:
+    - chat
+    - custom-gpt
+  inactive_candidates:
+    - claude
+    - opencode
+    - openai_plugin
+  exact_artifact_set: true
+  wildcard_runtime_selection: false
+  build_targets_derived_from_registry: true
+  validation_targets_derived_from_registry: true
+
+final_readiness:
+  status: ready_for_merge_after_ci
+  migration_steps_complete: 7
+  migration_steps_total: 7
+  final_gate: scripts/validate_gpt_builder_1_5_migration.py
+  canonical_behavior_preserved: true
+  version_1_0_0_preserved: true
+  knowledge_16_of_16_preserved: true
+  instruction_under_8000_chars_preserved: true
+  project_zip_workflow_preserved: true
+  source_vs_output_separation_preserved: true
+  project_status_changelog_preserved: true
+  print_and_play_preserved: true
+  rulebook_design_preserved: true
+  playtest_and_balance_preserved: true
+  guided_beginner_mode_preserved: true
+  release_build_workflow_preserved: true
+  active_targets:
+    - chat
+    - custom-gpt
+  inactive_candidates:
+    - claude
+    - opencode
+    - openai_plugin
+
+next_step:
+  recommended: null
+  title: Migration complete
+  reason: "GPT Byggaren 1.5.0-migreringen är 7/7 komplett."
+
+human_readable_status: "Steg 1–7 av 7 i GPT Byggaren 1.5.0-migreringen är klara. Väntar endast på grön slut-CI för merge-readiness."

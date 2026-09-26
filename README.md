@@ -64,3 +64,22 @@ bradspelsdesigner-chat-v1.1.0.zip
 ```
 
 Taggen måste följa `v<semver>`, exempelvis `v1.0.0` eller `v1.2.3`.
+
+## GPT Byggaren 1.5.0
+
+Migreringen är **7/7 komplett**. Canonical instruktion finns i `assistant/instructions.md`; legacy-källan `gpt-final-config/final-instructions-under-8000-chars.md` bevaras. Build, validering och aktivt distributionsset härleds från `runtime-distribution-registry.yaml`.
+
+Bevarat genom migreringen:
+- version `1.0.0`
+- 16/16 GPT Builder-Knowledge-filer
+- instruktion under 8000 tecken
+- projekt-zip som arbetsmodell
+- källfiler framför genererad output
+- uppdatering av `PROJECT_STATUS.md` och `CHANGELOG.md`
+- print-and-play-principer
+- regelboksstruktur
+- playtest och balansarbete
+- guidat nybörjarläge
+- release/build-arbetsflöde
+
+Aktiva runtimes är Chat och Custom GPT. OpenCode är compatibility-bedömd som equivalent candidate men inte aktiv. Claude Projects och OpenAI Plugin är reduced candidates och inte aktiva distributionsmål.

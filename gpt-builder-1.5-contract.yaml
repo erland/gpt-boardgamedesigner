@@ -1,0 +1,140 @@
+schema_version: 1
+builder:
+  target_version: 1.5.0
+  strategy: normalize_existing_canonical_contract
+  behavior_preserving: true
+
+canonical:
+  project_contract: gpt-project.yaml
+  instruction: assistant/instructions.md
+  legacy_instruction: gpt-final-config/final-instructions-under-8000-chars.md
+  version_file: VERSION
+  knowledge_root: gpt-builder-upload
+
+contracts:
+  capabilities:
+    critical:
+      - file_upload_and_project_zip_analysis
+      - file_generation_and_packaging
+      - structured_source_editing
+    required:
+      - project_inventory
+      - rulebook_design
+      - print_and_play_guidance
+      - playtest_and_balance_analysis
+      - project_status_and_changelog_maintenance
+      - guided_beginner_mode
+      - release_and_build_guidance
+    optional:
+      - image_generation
+      - web_research
+
+  artifacts:
+    required:
+      boardgame_project:
+        preferred_structure:
+          - docs
+          - data
+          - schemas
+          - templates
+          - scripts
+          - assets
+          - output
+          - README.md
+          - PROJECT_STATUS.md
+          - CHANGELOG.md
+      source_files:
+        preferred:
+          - markdown
+          - yaml
+          - json
+          - templates
+          - scripts
+      generated_output:
+        examples:
+          - pdf
+          - png
+          - svg
+        must_not_be_only_source_when_source_exists: true
+
+  state:
+    authority:
+      current_request: current_user_requirements
+      project_files: canonical_project_sources
+      guidance: canonical_instruction_plus_knowledge
+    preserve_project_structure: true
+    update_project_status_after_changes: true
+    update_changelog_after_changes: true
+    distinguish_source_from_output: true
+
+  tools:
+    required:
+      - id: file-upload
+        purpose:
+          - inspect_project_zip
+          - inspect_existing_game_material
+      - id: code-execution-or-data-analysis
+        purpose:
+          - analyze_zip
+          - edit_and_generate_project_files
+          - validate_project_structure
+          - package_updated_zip
+    optional:
+      - id: image-generation
+        purpose:
+          - concept_images
+          - component_graphics
+      - id: web
+        purpose:
+          - current_materials
+          - current_prices
+          - tools
+          - print_services
+          - boardgame_references
+
+behavior:
+  iterative_workflow_required: true
+  playability_before_graphic_polish: true
+  clear_core_loop_before_many_special_rules: true
+  structured_sources_before_one_off_outputs: true
+  small_iterations_before_large_reworks: true
+  print_and_play_realism_priority: true
+  inventory_zip_before_editing: true
+  source_first_editing: true
+  update_status_and_changelog_on_project_changes: true
+  prototype_before_fine_balance: true
+  simulations_are_hypotheses_not_ground_truth: true
+  beginner_mode_minimize_choices: true
+  mature_project_release_workflow_supported: true
+
+knowledge:
+  expected_files: 16
+
+release_policy:
+  current_version: 1.0.0
+  preserve_version_during_migration: true
+
+runtime_policy:
+  active:
+    chat:
+      compatibility: equivalent_runtime_dependent
+    custom-gpt:
+      compatibility: equivalent_with_platform_constraints
+  inactive:
+    claude:
+      compatibility: reduced
+      activation: not_active
+      blocker: deterministic_file_edit_build_and_zip_parity_not_guaranteed
+      assessment: docs/claude-opencode-compatibility.md
+    opencode:
+      compatibility: equivalent
+      activation: not_active
+      blocker: distribution_and_regression_not_implemented
+      assessment: docs/claude-opencode-compatibility.md
+    openai_plugin:
+      compatibility: reduced
+      status: assessed_not_active
+      architecture: skills_first
+      activation: not_active
+      blocker: deterministic_file_edit_build_and_zip_parity_not_implemented
+      assessment: docs/openai-plugin-compatibility.md

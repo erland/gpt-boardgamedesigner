@@ -1,0 +1,68 @@
+schema_version: 1
+project:
+  id: boardgamedesigner
+  name: Brädspelsdesigner
+  profile: iterative_design_and_production_assistant
+
+instructions:
+  canonical: assistant/instructions.md
+  legacy_source: gpt-final-config/final-instructions-under-8000-chars.md
+  preserve_legacy_source_byte_identical: true
+
+knowledge_architecture:
+  canonical_root: gpt-builder-upload
+  expected_files: 16
+  mirror_root: knowledge
+  mirror_numbered_files: 15
+
+runtime:
+  chat_zip:
+    enabled: true
+  custom_gpt:
+    enabled: true
+    instruction:
+      source: assistant/instructions.md
+      packaging_path: gpt-final-config/final-instructions-under-8000-chars.md
+      legacy_packaging_path_only: true
+      max_characters: 8000
+    knowledge:
+      strategy: exact_list
+      expected_files: 16
+  claude:
+    enabled: false
+    compatibility: reduced
+    activation: not_active
+    blocker: deterministic_file_edit_build_and_zip_parity_not_guaranteed
+    assessment: docs/claude-opencode-compatibility.md
+  opencode:
+    enabled: false
+    compatibility: equivalent
+    activation: not_active
+    blocker: distribution_and_regression_not_implemented
+    assessment: docs/claude-opencode-compatibility.md
+  openai_plugin:
+    enabled: false
+    compatibility: reduced
+    status: assessed_not_active
+    architecture: skills_first
+    activation: not_active
+    blocker: deterministic_file_edit_build_and_zip_parity_not_implemented
+    assessment: docs/openai-plugin-compatibility.md
+
+capabilities:
+  critical:
+    - file_upload_and_project_zip_analysis
+    - file_generation_and_packaging
+    - structured_source_editing
+  important:
+    - code_execution_or_data_analysis
+    - print_and_play_guidance
+    - rulebook_design
+    - playtest_and_balance_analysis
+    - optional_image_generation
+    - optional_web_research
+
+release:
+  version_file: VERSION
+  preserve_current_version: true
+  current_version: 1.0.0
