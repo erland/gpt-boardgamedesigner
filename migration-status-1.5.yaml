@@ -11,10 +11,11 @@ migration:
   total_steps: 7
 
 progress:
-  current_step: 2
-  last_completed_step: 1
+  current_step: 3
+  last_completed_step: 2
   completed_steps:
     - 1
+    - 2
   skipped_steps: []
 
 preservation:
@@ -34,6 +35,23 @@ preservation:
   preserve_release_build_workflow: true
   preserve_preflight_and_test_assets: true
 
+gpt_builder_1_5:
+  normalized_contract: gpt-builder-1.5-contract.yaml
+  validation: scripts/validate_gpt_builder_1_5_contract.py
+  canonical_instruction: assistant/instructions.md
+  canonical_matches_legacy_instruction: true
+  project_zip_workflow_preserved: true
+  source_vs_output_separation_preserved: true
+  project_status_changelog_preserved: true
+  print_and_play_preserved: true
+  rulebook_design_preserved: true
+  playtest_and_balance_preserved: true
+  guided_beginner_mode_preserved: true
+  release_build_workflow_preserved: true
+  knowledge_16_of_16_preserved: true
+  version_1_0_0_preserved: true
+  status: passed
+
 runtime_baseline:
   active:
     - chat
@@ -44,8 +62,8 @@ runtime_baseline:
     - openai_plugin
 
 next_step:
-  recommended: 2
-  title: Normalisera GPT Byggaren 1.5-kontrakten
-  reason: "Canonical instruktion och preserve-first baseline är etablerade."
+  recommended: 3
+  title: Normalisera Chat och Custom GPT
+  reason: "Capability-, artifact-, workspace/state- och tool-kontrakten är nu explicit normaliserade och maskinellt validerade."
 
-human_readable_status: "Steg 1 av 7 i GPT Byggaren 1.5.0-migreringen är klart."
+human_readable_status: "Steg 1–2 av 7 i GPT Byggaren 1.5.0-migreringen är klara."
