@@ -11,11 +11,12 @@ migration:
   total_steps: 7
 
 progress:
-  current_step: 3
-  last_completed_step: 2
+  current_step: 4
+  last_completed_step: 3
   completed_steps:
     - 1
     - 2
+    - 3
   skipped_steps: []
 
 preservation:
@@ -52,6 +53,20 @@ gpt_builder_1_5:
   version_1_0_0_preserved: true
   status: passed
 
+chat_custom_normalization:
+  status: passed
+  canonical_instruction_source: assistant/instructions.md
+  custom_gpt_packaging_path: gpt-final-config/final-instructions-under-8000-chars.md
+  chat_instruction_path: assistant/instructions.md
+  both_built_from_same_canonical_source: true
+  knowledge_16_of_16_in_both: true
+  project_zip_markers_verified: true
+  source_output_separation_verified: true
+  project_status_changelog_verified: true
+  print_and_play_verified: true
+  playtest_balance_verified: true
+  version_1_0_0_preserved: true
+
 runtime_baseline:
   active:
     - chat
@@ -62,8 +77,8 @@ runtime_baseline:
     - openai_plugin
 
 next_step:
-  recommended: 3
-  title: Normalisera Chat och Custom GPT
-  reason: "Capability-, artifact-, workspace/state- och tool-kontrakten är nu explicit normaliserade och maskinellt validerade."
+  recommended: 4
+  title: Bedöm Claude Projects och OpenCode
+  reason: "Chat och Custom GPT byggs nu från samma canonical instruktion och verifieras mot samma projekt-, fil-, print-and-play- och playtestregler."
 
-human_readable_status: "Steg 1–2 av 7 i GPT Byggaren 1.5.0-migreringen är klara."
+human_readable_status: "Steg 1–3 av 7 i GPT Byggaren 1.5.0-migreringen är klara."
