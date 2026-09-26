@@ -54,7 +54,7 @@ def resolve_version(explicit: str | None) -> str:
 
 def validate_sources() -> None:
     required = [
-        FINAL_DIR / "final-instructions-under-8000-chars.md",
+        ROOT / "assistant" / "instructions.md",
         FINAL_DIR / "final-conversation-starters.md",
         FINAL_DIR / "final-gpt-configuration.md",
         FINAL_DIR / "recommended-capabilities.md",
@@ -122,7 +122,10 @@ def build_custom(stage: Path, version: str) -> None:
         "final-gpt-configuration.md",
         "recommended-capabilities.md",
     ]:
-        copy_file(FINAL_DIR / name, stage / "gpt-final-config" / name)
+        if name == "final-instructions-under-8000-chars.md":
+            copy_file(ROOT / "assistant" / "instructions.md", stage / "gpt-final-config" / name)
+        else:
+            copy_file(FINAL_DIR / name, stage / "gpt-final-config" / name)
     for name in EXPECTED_KNOWLEDGE + ["README.md"]:
         copy_file(KNOWLEDGE_DIR / name, stage / "gpt-builder-upload" / name)
 
@@ -130,7 +133,7 @@ def build_custom(stage: Path, version: str) -> None:
 def build_portable(stage: Path, version: str) -> None:
     (stage / "VERSION").write_text(version + "\n", encoding="utf-8")
     copy_file(ROOT / "portable" / "START-HERE.md", stage / "START-HERE.md")
-    copy_file(FINAL_DIR / "final-instructions-under-8000-chars.md", stage / "assistant" / "instructions.md")
+    copy_file(ROOT / "assistant" / "instructions.md", stage / "assistant" / "instructions.md")
     copy_file(FINAL_DIR / "final-conversation-starters.md", stage / "assistant" / "conversation-starters.md")
     for name in EXPECTED_KNOWLEDGE:
         copy_file(KNOWLEDGE_DIR / name, stage / "knowledge" / name)
