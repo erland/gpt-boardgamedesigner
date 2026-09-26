@@ -1,0 +1,51 @@
+schema_version: 1
+project:
+  id: boardgamedesigner
+  name: Brädspelsdesigner
+  version: 1.0.0
+
+migration:
+  target_builder_version: 1.5.0
+  strategy: behavior_preserving
+  plan: docs/gpt-builder-1.5-runtime-migration.md
+  total_steps: 7
+
+progress:
+  current_step: 2
+  last_completed_step: 1
+  completed_steps:
+    - 1
+  skipped_steps: []
+
+preservation:
+  canonical_instruction: assistant/instructions.md
+  legacy_instruction_source: gpt-final-config/final-instructions-under-8000-chars.md
+  canonical_matches_legacy_byte_identical: true
+  preserve_version_1_0_0: true
+  preserve_knowledge_16_of_16: true
+  preserve_instruction_under_8000_chars: true
+  preserve_project_zip_workflow: true
+  preserve_source_vs_output_separation: true
+  preserve_project_status_and_changelog_updates: true
+  preserve_print_and_play_guidance: true
+  preserve_rulebook_structure: true
+  preserve_playtest_and_balance: true
+  preserve_guided_beginner_mode: true
+  preserve_release_build_workflow: true
+  preserve_preflight_and_test_assets: true
+
+runtime_baseline:
+  active:
+    - chat
+    - custom-gpt
+  assessment_pending:
+    - claude
+    - opencode
+    - openai_plugin
+
+next_step:
+  recommended: 2
+  title: Normalisera GPT Byggaren 1.5-kontrakten
+  reason: "Canonical instruktion och preserve-first baseline är etablerade."
+
+human_readable_status: "Steg 1 av 7 i GPT Byggaren 1.5.0-migreringen är klart."
