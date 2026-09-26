@@ -50,10 +50,26 @@ def main():
     c = read_zip(cz); p = read_zip(pz)
     if c.get("VERSION") != (v + "\n").encode(): raise SystemExit("Custom VERSION mismatch")
     if p.get("VERSION") != (v + "\n").encode(): raise SystemExit("Portable VERSION mismatch")
-    src_instr = (ROOT / "gpt-final-config/final-instructions-under-8000-chars.md").read_bytes()
+    src_instr = (ROOT / "assistant/instructions.md").read_bytes()
     src_starters = (ROOT / "gpt-final-config/final-conversation-starters.md").read_bytes()
-    if c.get("gpt-final-config/final-instructions-under-8000-chars.md") != src_instr: raise SystemExit("Custom instructions changed")
-    if p.get("assistant/instructions.md") != src_instr: raise SystemExit("Portable instructions changed")
+    if c.get("gpt-final-config/final-instructions-under-8000-chars.md") != src_instr: raise SystemExit("Custom instructions changed from canonical")
+    if p.get("assistant/instructions.md") != src_instr: raise SystemExit("Portable instructions changed from canonical")
+    critical_markers = [
+        "spelbarhet före grafisk puts",
+        "strukturerade källfiler före engångsfiler",
+        "När användaren bifogar en zip ska du först inventera struktur",
+        "uppdatera `PROJECT_STATUS.md` och `CHANGELOG.md`",
+        "Föreslå testutskrift innan slutproduktion.",
+        "Avråd från finbalans om kärnloop, mål eller regler ännu är oklara.",
+        "Simuleringar ska alltid presenteras som hypoteser, inte facit.",
+    ]
+    for package_name, package_instr in [
+        ("Custom GPT", c.get("gpt-final-config/final-instructions-under-8000-chars.md", b"").decode("utf-8")),
+        ("Chat", p.get("assistant/instructions.md", b"").decode("utf-8")),
+    ]:
+        for marker in critical_markers:
+            if marker not in package_instr:
+                raise SystemExit(f"{package_name} saknar kritisk beteendemarkör: {marker}")
     if c.get("gpt-final-config/final-conversation-starters.md") != src_starters: raise SystemExit("Custom starters changed")
     if p.get("assistant/conversation-starters.md") != src_starters: raise SystemExit("Portable starters changed")
     for name in EXPECTED_KNOWLEDGE:
