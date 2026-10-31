@@ -292,7 +292,6 @@ build_system:
 skills:
   contract_version: 1
   mode: explicit
-  resource_policy: explicit
   definitions:
   - id: game-design
     name: game-design
