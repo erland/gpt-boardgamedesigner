@@ -8,7 +8,9 @@ project:
     speltest och print-and-play.'
   version: 1.0.0
 instructions:
-  canonical: assistant/instructions.md
+  mode: modular_skills
+  core: canonical/core.md
+  canonical: canonical/core.md
   legacy_source: gpt-final-config/final-instructions-under-8000-chars.md
   preserve_legacy_source_byte_identical: true
 knowledge_architecture:
@@ -289,32 +291,53 @@ build_system:
   - '**/.pytest_cache/**'
 skills:
   contract_version: 1
-  mode: inferred
+  mode: explicit
   definitions:
-  - id: boardgame-design
-    name: boardgame-design
-    description: Utveckla, dokumentera, prototypa och testa brädspel från idé till
-      print-and-play och versionshanterade projekt.
-    source: assistant/instructions.md
+  - id: game-design
+    name: game-design
+    description: Aktiveras för spelidéer, spelkategori, kärnloop, mekanikkritik och nybörjarprototyper.
+    source: canonical/skills/game-design/behavior.md
     references:
+    - knowledge/game-category-patterns.md
+    - knowledge/mechanics-and-balance-patterns.md
+    - knowledge/first-time-designer-guided-workflow.md
+    - knowledge/existing-game-analysis-framework.md
+    assets: []
+    scripts: []
+  - id: rules-playtest
+    name: rules-playtest
+    description: Aktiveras för regelbok, blindtest, speltest, balans och regeltydlighet.
+    source: canonical/skills/rules-playtest/behavior.md
+    references:
+    - knowledge/rulebook-structure-standard.md
+    - knowledge/playtest-and-balancing-guide.md
     - knowledge/blindtest-and-rule-clarity-guide.md
-    - knowledge/boardgame-project-standard.md
+    assets: []
+    scripts: []
+  - id: print-and-play
+    name: print-and-play
+    description: Aktiveras för komponentdesign, grafisk produktion och utskriftsunderlag.
+    source: canonical/skills/print-and-play/behavior.md
+    references:
     - knowledge/component-design-guide.md
     - knowledge/component-economy-and-production-tradeoffs.md
-    - knowledge/example-project-pattern.md
-    - knowledge/existing-game-analysis-framework.md
-    - knowledge/first-time-designer-guided-workflow.md
-    - knowledge/game-category-patterns.md
-    - knowledge/gpt-role-and-working-style.md
-    - knowledge/llm-boardgame-design-workflow.md
-    - knowledge/mechanics-and-balance-patterns.md
-    - knowledge/playtest-and-balancing-guide.md
     - knowledge/print-and-play-production-guide.md
+    assets: []
+    scripts: []
+  - id: project-lifecycle
+    name: project-lifecycle
+    description: Aktiveras för ZIP-import, projektändring, käll-/outputhantering, versionshantering och release.
+    source: canonical/skills/project-lifecycle/behavior.md
+    references:
+    - knowledge/boardgame-project-standard.md
+    - knowledge/example-project-pattern.md
     - knowledge/release-and-build-workflow.md
-    - knowledge/rulebook-structure-standard.md
+    - knowledge/llm-boardgame-design-workflow.md
+    - knowledge/gpt-role-and-working-style.md
     assets: []
     scripts: []
   schema: schemas/skill-contract.schema.json
+
 tools:
   contract_version: 1
   tools: []
