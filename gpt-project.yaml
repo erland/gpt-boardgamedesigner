@@ -10,6 +10,7 @@ project:
 instructions:
   mode: modular_skills
   core: canonical/core.md
+  portable_skill_core: canonical/portable-skill-core.md
   canonical: canonical/core.md
   legacy_source: gpt-final-config/final-instructions-under-8000-chars.md
   preserve_legacy_source_byte_identical: true

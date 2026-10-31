@@ -68,9 +68,7 @@ jobs:
             V="${{ github.event.release.tag_name }}"
             if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
               [[ "$V" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-rc\.[1-9][0-9]*$ ]] || exit 1
-              # The pinned 1.6.33 builder uses the stable project version for artifact filenames.
-              # The GitHub release tag itself identifies the review candidate.
-              echo "value=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+              echo "value=${V#v}" >> "$GITHUB_OUTPUT"
             else
               [[ "$V" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
               echo "value=${V#v}" >> "$GITHUB_OUTPUT"
