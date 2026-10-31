@@ -291,7 +291,7 @@ build_system:
   - '**/.pytest_cache/**'
 skills:
   contract_version: 1
-  mode: modular_skills
+  mode: explicit
   resource_policy: explicit
   definitions:
   - id: game-design
