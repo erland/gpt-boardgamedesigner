@@ -6,9 +6,9 @@ migration:
   from: GPT Byggaren 1.5.0
   to: GPT Byggaren 1.6.33
   engine_selftest: pass
-  canonical_build: not_verified_on_github_checkout
+  canonical_build: pass
   runtime_host_parity: not_verified
   release_ready: false
 next_step:
-  id: canonical-source-sync
-  title: Importera kompletta 1.6.33-kontrakt och validera fem distributioner från ren checkout
+  id: host-acceptance
+  title: Verifiera funktionella arbetsflöden i de fem värdmiljöerna
