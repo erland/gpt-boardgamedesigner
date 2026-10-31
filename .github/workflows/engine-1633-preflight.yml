@@ -80,6 +80,7 @@ jobs:
       - name: Diagnose repository profile with original engine
         shell: bash
         run: |
+          set +e
           set -uo pipefail
           python3 /tmp/gpt-byggaren-engine-1.6.33/scripts/lint_gpt_project.py --project-root . > project-lint-1633.json 2> project-lint-1633.stderr
           lint_exit=$?
