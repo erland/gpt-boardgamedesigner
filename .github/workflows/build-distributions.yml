@@ -26,15 +26,37 @@ jobs:
           python /tmp/gpt-byggaren-engine/scripts/install_distribution_engine.py --source /tmp/gpt-byggaren-engine --project-root .
       - name: Enforce release readiness
         if: github.event_name == 'release'
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}
         run: |
           python - <<'PY'
+          import os
+          import re
           import yaml
           from pathlib import Path
-          state = yaml.safe_load(Path('project-status.yaml').read_text(encoding='utf-8'))
-          migration = state.get('migration', {})
-          assert migration.get('release_ready') is True, 'Release blocked: project-status.yaml migration.release_ready is not true'
-          assert migration.get('runtime_host_parity') == 'verified', 'Release blocked: five runtime host acceptance tests are not verified'
-          print('Release readiness approved')
+
+          tag = os.environ["RELEASE_TAG"]
+          prerelease = os.environ["RELEASE_PRERELEASE"] == "true"
+          state = yaml.safe_load(Path("project-status.yaml").read_text(encoding="utf-8"))
+          migration = state.get("migration", {})
+
+          if prerelease:
+              assert re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+-rc\.[1-9][0-9]*", tag), (
+                  "Review pre-releases require vX.Y.Z-rc.N and the GitHub Pre-release flag"
+              )
+              print("Review pre-release permitted; runtime host acceptance is NOT VERIFIED")
+          else:
+              assert re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+", tag), (
+                  "Production releases require vX.Y.Z without a pre-release suffix"
+              )
+              assert migration.get("release_ready") is True, (
+                  "Production release blocked: migration.release_ready is not true"
+              )
+              assert migration.get("runtime_host_parity") == "verified", (
+                  "Production release blocked: runtime host parity is not verified"
+              )
+              print("Production release approved")
           PY
       - name: Canonical GPT Byggaren 1.6.33 lint
         run: python /tmp/gpt-byggaren-engine/scripts/lint_gpt_project.py --project-root .
@@ -44,8 +66,15 @@ jobs:
         run: |
           if [[ "${{ github.event_name }}" == "release" ]]; then
             V="${{ github.event.release.tag_name }}"
-            [[ "$V" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
-            echo "value=${V#v}" >> "$GITHUB_OUTPUT"
+            if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
+              [[ "$V" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-rc\.[1-9][0-9]*$ ]] || exit 1
+              # The pinned 1.6.33 builder uses the stable project version for artifact filenames.
+              # The GitHub release tag itself identifies the review candidate.
+              echo "value=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+            else
+              [[ "$V" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
+              echo "value=${V#v}" >> "$GITHUB_OUTPUT"
+            fi
           else
             echo "value=$(cat VERSION)" >> "$GITHUB_OUTPUT"
           fi
