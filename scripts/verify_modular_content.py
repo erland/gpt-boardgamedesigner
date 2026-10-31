@@ -21,7 +21,7 @@ def compact(s):
 
 def markers(file):
     paragraphs = [compact(p) for p in file.read_text(encoding="utf-8").split("\n\n")]
-    return [p[:110] for p in paragraphs if len(p) >= 45][:2]
+    return [p for p in paragraphs if p]
 
 def main():
     report = {"level": "packaged-content", "runtime_host_parity": "NOT VERIFIED",
@@ -37,17 +37,17 @@ def main():
         for runtime, base in NATIVE.items():
             target = base / sid / "SKILL.md"
             ok = target.is_file() and all(p in compact(target.read_text(encoding="utf-8")) for p in probes)
-            report["results"][f"{runtime}/{sid}"] = "PASS" if ok else "FAIL"
+            report["results"][f"{runtime}/{sid}"] = {"status": "PASS" if ok else "FAIL", "paragraphs_checked": len(probes), "paragraphs_found": sum(p in compact(target.read_text(encoding="utf-8")) for p in probes) if target.is_file() else 0}
             if not ok:
                 failures.append(f"{runtime}/{sid}: behavior excerpt missing")
         for runtime, target in FALLBACK.items():
             if not target.is_file():
-                report["results"][f"{runtime}/{sid}"] = "FAIL"
+                report["results"][f"{runtime}/{sid}"] = {"status": "FAIL", "paragraphs_checked": len(probes), "paragraphs_found": 0}
                 failures.append(f"{runtime}/{sid}: compiled instructions missing")
             else:
                 text = compact(target.read_text(encoding="utf-8"))
                 ok = all(p in text for p in probes)
-                report["results"][f"{runtime}/{sid}"] = "PASS" if ok else "NOT VERIFIED"
+                report["results"][f"{runtime}/{sid}"] = {"status": "PASS" if ok else "NOT VERIFIED", "paragraphs_checked": len(probes), "paragraphs_found": sum(p in text for p in probes)}
                 # Fallback may summarize source; missing exact text is a review item, not a false PASS.
     out = ROOT / "build/modular-content-evidence.json"
     out.parent.mkdir(parents=True, exist_ok=True)
