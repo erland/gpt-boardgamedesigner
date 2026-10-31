@@ -51,10 +51,14 @@ jobs:
           fi
       - run: python scripts/build_distributions.py --version '${{ steps.version.outputs.value }}'
       - run: python scripts/validate_distributions.py
+      - name: G01/G03 offline distribution preflight
+        run: python scripts/check_g01_g03_preflight.py --dist dist --output build/acceptance-preflight.json
       - uses: actions/upload-artifact@v4
         with:
           name: boardgamedesigner-distributions
-          path: dist/*.zip
+          path: |
+            dist/*.zip
+            build/acceptance-preflight.json
       - name: Attach distributions to published release
         if: github.event_name == 'release'
         env:
