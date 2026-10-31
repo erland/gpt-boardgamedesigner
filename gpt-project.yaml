@@ -19,7 +19,7 @@ runtime:
   chat_zip:
     enabled: true
   custom_gpt:
-    enabled: false
+    enabled: true
     instruction:
       source: assistant/instructions.md
       packaging_path: gpt-final-config/final-instructions-under-8000-chars.md
@@ -29,19 +29,19 @@ runtime:
       strategy: exact_list
       expected_files: 16
   claude:
-    enabled: true
+    enabled: false
     compatibility: reduced
     activation: not_active
     blocker: deterministic_file_edit_build_and_zip_parity_not_guaranteed
     assessment: docs/claude-opencode-compatibility.md
   opencode:
-    enabled: true
+    enabled: false
     compatibility: equivalent
     activation: not_active
     blocker: distribution_and_regression_not_implemented
     assessment: docs/claude-opencode-compatibility.md
   openai_plugin:
-    enabled: true
+    enabled: false
     compatibility: reduced
     status: assessed_not_active
     architecture: skills_first
@@ -96,27 +96,13 @@ skills:
       assets: []
       scripts: []
 
-# Version 1.6.33 migration: explicit canonical runtime/build contracts.
-# Historical 1.5 fields above are retained for comparison pending final engine transition.
-build_system:
-  build_script: scripts/build_distributions.py
-  validation_script: scripts/validate_distributions.py
-  targets:
-    - project
+# Planned migration targets are informational until original-engine build and host tests pass.
+migration_1633:
+  state: pending_canonical_source_sync
+  target_runtimes:
     - chat
+    - plugin
     - claude_project
     - claude_skills
     - opencode
-    - plugin
-  output_root: dist
-  working_root: build
-  deterministic_zip: true
-  manifest: true
-  checksums: sha256
-
-development:
-  plan: docs/development-plan.md
-  status: project-status.yaml
-  human_readable_status: STATUS.md
-  project_documentation:
-    - PROJECT.md
+  release_ready: false
