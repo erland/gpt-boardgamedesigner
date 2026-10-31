@@ -43,6 +43,8 @@ jobs:
             echo "value=$(cat VERSION)" >> "$GITHUB_OUTPUT"
           fi
       - run: python scripts/build_distributions.py --version '${{ steps.version.outputs.value }}'
+      - name: Finalize OpenCode modular instructions and archive integrity
+        run: python scripts/finalize_opencode.py
       - run: python scripts/validate_distributions.py
       - name: Verify canonical modular Skill packaging
         run: python scripts/validate_modular_skills_packaging.py
