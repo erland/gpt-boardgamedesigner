@@ -51,6 +51,8 @@ jobs:
           fi
       - run: python scripts/build_distributions.py --version '${{ steps.version.outputs.value }}'
       - run: python scripts/validate_distributions.py
+      - name: G03 project ZIP inventory fixture tests
+        run: python3 -m unittest discover -s tests -p 'test_g03_zip_inventory.py' -v
       - name: G01/G03 offline distribution preflight
         run: python scripts/check_g01_g03_preflight.py --dist dist --output build/acceptance-preflight.json
       - uses: actions/upload-artifact@v4
