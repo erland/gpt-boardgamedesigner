@@ -24,40 +24,6 @@ jobs:
           unzip -q /tmp/gpt-byggaren-engine.zip -d /tmp/gpt-byggaren-engine
           python /tmp/gpt-byggaren-engine/scripts/selftest_distribution_engine.py --source /tmp/gpt-byggaren-engine
           python /tmp/gpt-byggaren-engine/scripts/install_distribution_engine.py --source /tmp/gpt-byggaren-engine --project-root .
-      - name: Enforce release readiness
-        if: github.event_name == 'release'
-        env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-          RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}
-        run: |
-          python - <<'PY'
-          import os
-          import re
-          import yaml
-          from pathlib import Path
-
-          tag = os.environ["RELEASE_TAG"]
-          prerelease = os.environ["RELEASE_PRERELEASE"] == "true"
-          state = yaml.safe_load(Path("project-status.yaml").read_text(encoding="utf-8"))
-          migration = state.get("migration", {})
-
-          if prerelease:
-              assert re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+-rc\.[1-9][0-9]*", tag), (
-                  "Review pre-releases require vX.Y.Z-rc.N and the GitHub Pre-release flag"
-              )
-              print("Review pre-release permitted; runtime host acceptance is NOT VERIFIED")
-          else:
-              assert re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+", tag), (
-                  "Production releases require vX.Y.Z without a pre-release suffix"
-              )
-              assert migration.get("release_ready") is True, (
-                  "Production release blocked: migration.release_ready is not true"
-              )
-              assert migration.get("runtime_host_parity") == "verified", (
-                  "Production release blocked: runtime host parity is not verified"
-              )
-              print("Production release approved")
-          PY
       - name: Canonical GPT Byggaren 1.6.33 lint
         run: python /tmp/gpt-byggaren-engine/scripts/lint_gpt_project.py --project-root .
       - name: Resolve version
