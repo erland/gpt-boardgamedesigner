@@ -32,7 +32,7 @@ def run():
         assert (build / ".opencode/skills" / skill["id"] / "SKILL.md").is_file()
     assert core in old, "original projection missing core"
     index = "\n".join(
-        f"- \`{s['id']}\`: {s['description']} Läs \`.opencode/skills/{s['id']}/SKILL.md\` vid relevant uppgift."
+        f"- `{s['id']}`: {s['description']} Läs `.opencode/skills/{s['id']}/SKILL.md` vid relevant uppgift."
         for s in definitions
     )
     new = (
@@ -43,6 +43,7 @@ def run():
         "Arbeta i aktuell workspace; ange sökväg till underkatalog när ett separat spelprojekt bearbetas. "
         "Endast deklarerade runtimeverktyg får antas existera.\n"
     )
+    assert "\\`" not in new, "escaped Markdown backticks in AGENTS.md"
     agents.write_text(new, encoding="utf-8")
     assert all((ROOT / s["source"]).read_text(encoding="utf-8").strip() not in new for s in definitions), "duplicated Skill behavior"
     manifest_path = build / "MANIFEST.json"
