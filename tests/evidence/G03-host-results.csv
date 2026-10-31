@@ -1,0 +1,6 @@
+runtime,scenario,status,host_model,date_utc,prompt_record,response_record,artifact_record,reviewer,notes
+chat,G03,NOT VERIFIED,,,,,,,
+plugin,G03,NOT VERIFIED,,,,,,,
+claude_project,G03,NOT VERIFIED,,,,,,,
+claude_skills,G03,NOT VERIFIED,,,,,,,
+opencode,G03,NOT VERIFIED,,,,,,,
