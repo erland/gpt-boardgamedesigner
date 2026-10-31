@@ -1,0 +1,67 @@
+name: GPT Byggaren 1.6.33 original-engine preflight
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  engine-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install original engine (pinned version)
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --show-error --retry 3 \
+            https://github.com/erland/gpt-byggaren/releases/download/v1.6.33/gpt-byggaren-engine-1.6.33.zip \
+            --output /tmp/gpt-byggaren-engine-1.6.33.zip
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+          source = Path('/tmp/gpt-byggaren-engine-1.6.33.zip')
+          dest = Path('/tmp/gpt-byggaren-engine-1.6.33')
+          with zipfile.ZipFile(source) as archive:
+              members = archive.infolist()
+              for item in members:
+                  relative = Path(item.filename)
+                  if relative.is_absolute() or '..' in relative.parts:
+                      raise SystemExit(f'Unsafe engine archive path: {item.filename}')
+              archive.extractall(dest)
+          if not (dest / 'scripts/selftest_distribution_engine.py').is_file():
+              raise SystemExit('Pinned engine self-test missing')
+          print(f'Extracted {len(members)} original engine members')
+          PY
+      - name: Canonical engine integrity and six-archive self-test
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 /tmp/gpt-byggaren-engine-1.6.33/scripts/selftest_distribution_engine.py \
+            --source /tmp/gpt-byggaren-engine-1.6.33 \
+            --output engine-selftest.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gpt-byggaren-1.6.33-engine-selftest
+          path: engine-selftest.json
+
+  migration-inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install PyYAML
+      - name: Report current source migration gaps
+        run: python3 scripts/audit_1633_readiness.py > migration-readiness.json && cat migration-readiness.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gpt-byggaren-1.6.33-migration-readiness
+          path: migration-readiness.json
