@@ -95,3 +95,14 @@ skills:
         - knowledge/rulebook-structure-standard.md
       assets: []
       scripts: []
+
+# Planned migration targets are informational until original-engine build and host tests pass.
+migration_1633:
+  state: pending_canonical_source_sync
+  target_runtimes:
+    - chat
+    - plugin
+    - claude_project
+    - claude_skills
+    - opencode
+  release_ready: false
