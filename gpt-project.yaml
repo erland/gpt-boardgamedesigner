@@ -66,3 +66,32 @@ release:
   version_file: VERSION
   preserve_current_version: true
   current_version: 1.0.0
+
+# Explicit skill resources for the canonical 1.6.33 engine.
+skills:
+  contract_version: 1
+  mode: inferred
+  schema: schemas/skill-contract.schema.json
+  definitions:
+    - id: boardgame-design
+      name: boardgame-design
+      description: Utveckla och testa brädspel, regler och print-and-play.
+      source: assistant/instructions.md
+      references:
+        - knowledge/blindtest-and-rule-clarity-guide.md
+        - knowledge/boardgame-project-standard.md
+        - knowledge/component-design-guide.md
+        - knowledge/component-economy-and-production-tradeoffs.md
+        - knowledge/example-project-pattern.md
+        - knowledge/existing-game-analysis-framework.md
+        - knowledge/first-time-designer-guided-workflow.md
+        - knowledge/game-category-patterns.md
+        - knowledge/gpt-role-and-working-style.md
+        - knowledge/llm-boardgame-design-workflow.md
+        - knowledge/mechanics-and-balance-patterns.md
+        - knowledge/playtest-and-balancing-guide.md
+        - knowledge/print-and-play-production-guide.md
+        - knowledge/release-and-build-workflow.md
+        - knowledge/rulebook-structure-standard.md
+      assets: []
+      scripts: []
