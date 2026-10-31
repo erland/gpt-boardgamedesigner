@@ -1,0 +1,731 @@
+{
+  "migration": {
+    "source_class": "L1",
+    "target_contract_version": 1,
+    "status": "ready_with_manual_review"
+  },
+  "decisions": [
+    {
+      "area": "capabilities",
+      "action": "review_unknown",
+      "confidence": "manual_review",
+      "evidence": [
+        "critical",
+        "important"
+      ]
+    },
+    {
+      "area": "artifacts",
+      "action": "no_legacy_artifacts",
+      "confidence": "not_applicable"
+    },
+    {
+      "area": "workspace_state",
+      "action": "derive",
+      "confidence": "auto_with_warning"
+    },
+    {
+      "area": "tools",
+      "action": "inventory_scripts",
+      "confidence": "manual_review",
+      "evidence": [
+        "scripts/build_distributions.py",
+        "scripts/validate_claude_opencode_compatibility.py",
+        "scripts/validate_distributions.py",
+        "scripts/validate_gpt_builder_1_5_contract.py",
+        "scripts/validate_gpt_builder_1_5_migration.py",
+        "scripts/validate_openai_plugin_compatibility.py",
+        "scripts/validate_runtime_distribution_registry.py"
+      ]
+    }
+  ],
+  "warnings": [
+    "Unknown legacy capabilities were not migrated automatically: critical, important",
+    "Workspace/state was inferred without a structured workspace_file authority.",
+    "7 script candidate(s) were found but were not promoted to runtime tools automatically."
+  ],
+  "changes": {
+    "workspace_state": {
+      "contract_version": 1,
+      "workspace": {
+        "requirement": "optional",
+        "persistence": "preferred",
+        "portable": true,
+        "separate_from_assistant": true
+      },
+      "state": {
+        "requirement": "optional",
+        "persistence": "preferred",
+        "authority": "conversation",
+        "conversation_fallback": true
+      },
+      "runtime_preferences": {
+        "chat": "conversation_or_file",
+        "agent": "runtime_managed"
+      }
+    }
+  },
+  "opencode": {
+    "status": "reduced",
+    "reasons": [
+      "Potential runtime scripts require manual tool inventory."
+    ],
+    "can_enable_automatically": false,
+    "required_actions": [
+      "Classify required runtime scripts into an explicit tool contract."
+    ]
+  },
+  "plugin": {
+    "status": "reduced",
+    "reasons": [
+      "Potential runtime scripts require manual tool inventory."
+    ],
+    "can_enable_automatically": false,
+    "required_actions": [
+      "Classify scripts before treating them as Plugin runtime resources."
+    ]
+  },
+  "safe_copy": {
+    "source_type": "directory",
+    "source_unchanged": true,
+    "project_root": ".",
+    "destination": "/mnt/data/bgwork/migrated"
+  },
+  "custom_gpt_retirement": {
+    "result": "changed",
+    "previously_enabled": true,
+    "legacy_configuration_preserved": true,
+    "automatic_plugin_conversion": false
+  },
+  "existing_project_assessment": {
+    "status": "review_required",
+    "project_contract_present": true,
+    "issues": [
+      "Legacy runtime.openai_plugin needs explicit mapping to runtime.plugin",
+      "No modern build_system.runtime_targets are declared",
+      "Previously enabled runtimes require independent parity review",
+      "Canonical instructions missing from expected modern source path"
+    ],
+    "dependency_inventory": {
+      "knowledge_files": [
+        "knowledge/blindtest-and-rule-clarity-guide.md",
+        "knowledge/boardgame-project-standard.md",
+        "knowledge/component-design-guide.md",
+        "knowledge/component-economy-and-production-tradeoffs.md",
+        "knowledge/example-project-pattern.md",
+        "knowledge/existing-game-analysis-framework.md",
+        "knowledge/first-time-designer-guided-workflow.md",
+        "knowledge/game-category-patterns.md",
+        "knowledge/gpt-role-and-working-style.md",
+        "knowledge/llm-boardgame-design-workflow.md",
+        "knowledge/mechanics-and-balance-patterns.md",
+        "knowledge/playtest-and-balancing-guide.md",
+        "knowledge/print-and-play-production-guide.md",
+        "knowledge/release-and-build-workflow.md",
+        "knowledge/rulebook-structure-standard.md"
+      ],
+      "candidate_scripts": [
+        "scripts/build_distributions.py",
+        "scripts/validate_claude_opencode_compatibility.py",
+        "scripts/validate_distributions.py",
+        "scripts/validate_gpt_builder_1_5_contract.py",
+        "scripts/validate_gpt_builder_1_5_migration.py",
+        "scripts/validate_openai_plugin_compatibility.py",
+        "scripts/validate_runtime_distribution_registry.py"
+      ],
+      "integration_manifests": [],
+      "tools_verified": false,
+      "knowledge_completeness_verified": false,
+      "review_required": true,
+      "limitations": [
+        "Packaged files do not prove tool availability or permissions.",
+        "A distribution may omit original Knowledge and source dependencies."
+      ]
+    },
+    "ready_for_modern_distribution_build": false,
+    "release_ready": false
+  },
+  "legacy_plugin_plan": {
+    "result": "review_required",
+    "plan": "reconstructed-canonical/plugin-migration-plan.json"
+  },
+  "apply": {
+    "result": "changed"
+  },
+  "engine_migration": {
+    "engine_required": "needs_review",
+    "engine_status": "review_required",
+    "engine_candidates": [
+      "scripts/validate_claude_opencode_compatibility.py",
+      "scripts/validate_gpt_builder_1_5_contract.py",
+      "scripts/validate_gpt_builder_1_5_migration.py",
+      "scripts/validate_openai_plugin_compatibility.py",
+      "scripts/validate_runtime_distribution_registry.py"
+    ],
+    "engine_configuration_present": false,
+    "engine_selftest_verified": false,
+    "plugin_repair_status": "legacy_plugin_requires_mapping",
+    "runtime_parity_status": "unverified",
+    "automatic_plugin_repair": false,
+    "automatic_engine_activation": false,
+    "release_ready": false,
+    "required_actions": [
+      "Classify candidate Python scripts as Plugin runtime requirements, tests, or build-only tools.",
+      "If executable Plugin scripts are required, declare engine.resources and a real engine.selftest.",
+      "Rebuild Plugin using the current canonical distribution builder; inspect Skills and resources.",
+      "Validate all five distributions and test the Plugin in its actual host.",
+      "Install/verify the current canonical builder only after reviewing the copied project schema and preserving project-specific files."
+    ]
+  },
+  "generic_discovery": {
+    "schema_version": 1,
+    "status": "analysis_required",
+    "source_files": [
+      {
+        "path": ".github/workflows/build-distributions.yml",
+        "sha256": "8a8f6a6b6dcee210bac662dfef9ae9577a6d1eeb09d53ddc5d3d72e0d93673cc",
+        "size": 2442,
+        "candidate_roles": [
+          "configuration_candidate"
+        ]
+      },
+      {
+        "path": ".gitignore",
+        "sha256": "1740a8e751f5bb5f4a4559425e861b9f2e3ef1a27363e9c3258f44fc0d270628",
+        "size": 7,
+        "candidate_roles": []
+      },
+      {
+        "path": "README.md",
+        "sha256": "6fa0305b702ebc0a47129c6483d901143a9b4ab409cf58a29e5e608c773d20e7",
+        "size": 3101,
+        "candidate_roles": []
+      },
+      {
+        "path": "VERSION",
+        "sha256": "59854984853104df5c353e2f681a15fc7924742f9a2e468c29af248dce45ce03",
+        "size": 6,
+        "candidate_roles": []
+      },
+      {
+        "path": "assistant/instructions.md",
+        "sha256": "ebeff259b6279092b4b5764ed879bfbdc93a5c8d70cd559420f57b4fd908e0b4",
+        "size": 5197,
+        "candidate_roles": [
+          "instruction_candidate"
+        ]
+      },
+      {
+        "path": "docs/claude-opencode-compatibility.md",
+        "sha256": "30b0ba5c47d2ae8bf6d237b5d09bf01deda7c00c2b78555a4b0a6104a5efe26d",
+        "size": 2893,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "docs/gpt-builder-1.5-runtime-migration.md",
+        "sha256": "bf262997c475444656be28dc0a298845df4cb5e993870414e0535aa026e91562",
+        "size": 1370,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "docs/openai-plugin-compatibility.md",
+        "sha256": "0af8b5150a50ad7c181e8c276c7651db49c3be7695393735319031952a292b3f",
+        "size": 3254,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "gpt-builder-1.5-contract.yaml",
+        "sha256": "2a8e0b753211a7e0cfff37c0b63a2f4b1a371712422146f3243a06213f7ca081",
+        "size": 3895,
+        "candidate_roles": [
+          "configuration_candidate"
+        ]
+      },
+      {
+        "path": "gpt-builder-upload/01-gpt-role-and-working-style.md",
+        "sha256": "747832ca296aff9673235ffa8ca1ae634548a7cbc3244bed0104aed07fd567bd",
+        "size": 7086,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/02-boardgame-project-standard.md",
+        "sha256": "5e8283116d72792a73495d7feab0ab126a562c1c6a12ca30ee3c609c5fe296ac",
+        "size": 14930,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/03-component-design-guide.md",
+        "sha256": "f33f8374f1219f44458653a95f68d8ad685e1a08e7f87847df1d4a1ea5cf28d7",
+        "size": 22224,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/04-game-category-patterns.md",
+        "sha256": "ddcc5a9b0cc0ae4ec99f4f7402545bca5bf06f522c31e9999a3c810528532264",
+        "size": 27064,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/05-print-and-play-production-guide.md",
+        "sha256": "0e453c207051a72b5249c546fab70609f8a7f64f2a392a1dfd7f8b76e076e22c",
+        "size": 21200,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/06-rulebook-structure-standard.md",
+        "sha256": "7ae09d36fa32b6e50f211ca947d26c235272faea78fe70ae4b97f9349b65a38b",
+        "size": 21287,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/07-playtest-and-balancing-guide.md",
+        "sha256": "b632c117f40e44613f730a85ccaf6c5f50cb53eb7b43850062a49e9fd801b966",
+        "size": 24381,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/08-example-project-pattern.md",
+        "sha256": "d5fdd1ec55dde3d6dfb7d2bb378c9e65371703d9d5eee605f8d4103e37634a83",
+        "size": 26770,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/09-mechanics-and-balance-patterns.md",
+        "sha256": "07713030accf9bdf47a6c08ab7588268fbf080d89aa649686a2115081570e9dc",
+        "size": 8873,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/10-blindtest-and-rule-clarity-guide.md",
+        "sha256": "a755d1b419c12f998ec1b09608caa7c5e0aabc9db9a63dd42bdc019e371faf4b",
+        "size": 6468,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/11-component-economy-and-production-tradeoffs.md",
+        "sha256": "b0da7ab5614f4e893475f293f80f2333b3489674a36d88fbc087ff5b9dd9b4ba",
+        "size": 5548,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/12-llm-boardgame-design-workflow.md",
+        "sha256": "dbeccc4944eee5aabe1ba17622ea397c8c2855ef7c5d93b05978b532711b64b7",
+        "size": 4921,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/13-existing-game-analysis-framework.md",
+        "sha256": "5e6bdc627a53cf20557e2ec427365831c8dbf23498f1014d1087810df84e0035",
+        "size": 4555,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/14-first-time-designer-guided-workflow.md",
+        "sha256": "80d52f1a8060d2e3ecd9f7c0ea92c31a7d488b9199108e9d09f76baac7925882",
+        "size": 10462,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/15-release-and-build-workflow.md",
+        "sha256": "4b64bafa31acfa9b8c0021f7f373f4c1be97360bbe3ec941a5fbaefb7a39ce00",
+        "size": 9800,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/KNOWLEDGE_INDEX.md",
+        "sha256": "b64c392ab07b8cb7afcd08c33c66c966536a31811fb609577d404c0c739411d6",
+        "size": 978,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-builder-upload/README.md",
+        "sha256": "779f61831ccc891b643726c136de8dfa23cebed1a673ce67dc05a49da2fbfe22",
+        "size": 156,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-final-config/final-conversation-starters.md",
+        "sha256": "7af5860922bd70f02b178ca3b1fb1fd468c94c62870f691f1045d8792b51961e",
+        "size": 812,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-final-config/final-gpt-configuration.md",
+        "sha256": "566f91c297e22737fdb55531a6ef7bdc918b4d19b94a727488706274fe0bd973",
+        "size": 1701,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-final-config/final-instructions-under-8000-chars.md",
+        "sha256": "ebeff259b6279092b4b5764ed879bfbdc93a5c8d70cd559420f57b4fd908e0b4",
+        "size": 5197,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-final-config/final-test-matrix.md",
+        "sha256": "a5be9820d0810a4bbd841076834c6e92a9071db90a8a735ddb34569620a60358",
+        "size": 4147,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-final-config/recommended-capabilities.md",
+        "sha256": "fc3b12cfee4884f3e3b01a56685dade0cd68718fb819388a5f8b3c5ed957e22f",
+        "size": 1113,
+        "candidate_roles": []
+      },
+      {
+        "path": "gpt-project.yaml",
+        "sha256": "99383be07f51fb3cc5de1607356ffc5030f14cfc615841ac5914a62bf1ea8139",
+        "size": 2291,
+        "candidate_roles": [
+          "configuration_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/blindtest-and-rule-clarity-guide.md",
+        "sha256": "a755d1b419c12f998ec1b09608caa7c5e0aabc9db9a63dd42bdc019e371faf4b",
+        "size": 6468,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/boardgame-project-standard.md",
+        "sha256": "5e8283116d72792a73495d7feab0ab126a562c1c6a12ca30ee3c609c5fe296ac",
+        "size": 14930,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/component-design-guide.md",
+        "sha256": "f33f8374f1219f44458653a95f68d8ad685e1a08e7f87847df1d4a1ea5cf28d7",
+        "size": 22224,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/component-economy-and-production-tradeoffs.md",
+        "sha256": "b0da7ab5614f4e893475f293f80f2333b3489674a36d88fbc087ff5b9dd9b4ba",
+        "size": 5548,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/example-project-pattern.md",
+        "sha256": "d5fdd1ec55dde3d6dfb7d2bb378c9e65371703d9d5eee605f8d4103e37634a83",
+        "size": 26770,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/existing-game-analysis-framework.md",
+        "sha256": "5e6bdc627a53cf20557e2ec427365831c8dbf23498f1014d1087810df84e0035",
+        "size": 4555,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/first-time-designer-guided-workflow.md",
+        "sha256": "80d52f1a8060d2e3ecd9f7c0ea92c31a7d488b9199108e9d09f76baac7925882",
+        "size": 10462,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/game-category-patterns.md",
+        "sha256": "ddcc5a9b0cc0ae4ec99f4f7402545bca5bf06f522c31e9999a3c810528532264",
+        "size": 27064,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/gpt-role-and-working-style.md",
+        "sha256": "747832ca296aff9673235ffa8ca1ae634548a7cbc3244bed0104aed07fd567bd",
+        "size": 7086,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/llm-boardgame-design-workflow.md",
+        "sha256": "dbeccc4944eee5aabe1ba17622ea397c8c2855ef7c5d93b05978b532711b64b7",
+        "size": 4921,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/mechanics-and-balance-patterns.md",
+        "sha256": "07713030accf9bdf47a6c08ab7588268fbf080d89aa649686a2115081570e9dc",
+        "size": 8873,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/playtest-and-balancing-guide.md",
+        "sha256": "b632c117f40e44613f730a85ccaf6c5f50cb53eb7b43850062a49e9fd801b966",
+        "size": 24381,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/print-and-play-production-guide.md",
+        "sha256": "0e453c207051a72b5249c546fab70609f8a7f64f2a392a1dfd7f8b76e076e22c",
+        "size": 21200,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/release-and-build-workflow.md",
+        "sha256": "4b64bafa31acfa9b8c0021f7f373f4c1be97360bbe3ec941a5fbaefb7a39ce00",
+        "size": 9800,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "knowledge/rulebook-structure-standard.md",
+        "sha256": "7ae09d36fa32b6e50f211ca947d26c235272faea78fe70ae4b97f9349b65a38b",
+        "size": 21287,
+        "candidate_roles": [
+          "knowledge_candidate"
+        ]
+      },
+      {
+        "path": "migration-status-1.5.yaml",
+        "sha256": "c4b420272aed48ae41647e933dc5306169fb71291bfed301f9ca7f89565d4457",
+        "size": 5047,
+        "candidate_roles": [
+          "configuration_candidate"
+        ]
+      },
+      {
+        "path": "portable/START-HERE.md",
+        "sha256": "f69d5bed1e4ecb8d5bd3ae2a25a7326563c55df84842fe797e529b226dc8c415",
+        "size": 965,
+        "candidate_roles": []
+      },
+      {
+        "path": "preflight/COPY_TO_GPT_BUILDER.md",
+        "sha256": "1174cbb9a114dfaca268a8df4a7c5e1b1fe9f2ebf6e67cc352396a9bb9dc4f17",
+        "size": 1075,
+        "candidate_roles": []
+      },
+      {
+        "path": "preflight/GPT_BUILDER_CHECKLIST.md",
+        "sha256": "500257723a7f158f8f3b630e489e09007e52754ed4d5012a8bb635a0aaf27827",
+        "size": 224,
+        "candidate_roles": []
+      },
+      {
+        "path": "reconstructed-canonical/plugin-migration-plan.json",
+        "sha256": "f9bdf94dd9d4801d5bd7e0dfcfcd6fcfc7138c39ca32403af372bc826e7f60ed",
+        "size": 1162,
+        "candidate_roles": [
+          "configuration_candidate"
+        ]
+      },
+      {
+        "path": "runtime-distribution-registry.yaml",
+        "sha256": "ffc4f2249e6425703409ee60b397590331f2802760c246d5dae6966063450ca2",
+        "size": 1460,
+        "candidate_roles": [
+          "configuration_candidate"
+        ]
+      },
+      {
+        "path": "scripts/build_distributions.py",
+        "sha256": "9b66de22ed7ecf0a0ba60ff66debb9bb03093581f194e6e66e1431749bcf5d6d",
+        "size": 7010,
+        "candidate_roles": [
+          "script_candidate"
+        ]
+      },
+      {
+        "path": "scripts/validate_claude_opencode_compatibility.py",
+        "sha256": "a6f6bfe0ec2c2914ed1058b4c035452af85f5f32879089305f5aa0f4b385cef1",
+        "size": 2412,
+        "candidate_roles": [
+          "script_candidate"
+        ]
+      },
+      {
+        "path": "scripts/validate_distributions.py",
+        "sha256": "a103e05811ec0e963ead43796b077bd7f27b5d9ec83df56be9ad592c1ae1ac16",
+        "size": 5300,
+        "candidate_roles": [
+          "script_candidate"
+        ]
+      },
+      {
+        "path": "scripts/validate_gpt_builder_1_5_contract.py",
+        "sha256": "38486e5b5339346f9d73d26ff8c1aa84c6a7310a6edbff4ed862b5b1550fe834",
+        "size": 2799,
+        "candidate_roles": [
+          "script_candidate"
+        ]
+      },
+      {
+        "path": "scripts/validate_gpt_builder_1_5_migration.py",
+        "sha256": "5d621eb2936ffca76154e8c77a86681a58b7ed6d44804e50008eb7a643850cbd",
+        "size": 3041,
+        "candidate_roles": [
+          "script_candidate"
+        ]
+      },
+      {
+        "path": "scripts/validate_openai_plugin_compatibility.py",
+        "sha256": "e806fdd8aabc796cae64fee151587beca9576f520443ce8e4417452fc6e0c5b3",
+        "size": 2249,
+        "candidate_roles": [
+          "script_candidate"
+        ]
+      },
+      {
+        "path": "scripts/validate_runtime_distribution_registry.py",
+        "sha256": "02ceaeab2b260f391cb13c0d1bc4eb5a9e9da6cf67bcd5bd8761e2286a2d1f06",
+        "size": 1385,
+        "candidate_roles": [
+          "script_candidate"
+        ]
+      },
+      {
+        "path": "tests/all-test-prompts.md",
+        "sha256": "c74ac734766b9a11a534681addf19515c1e47c85b7fc3ff7f7544ee9e5b4d973",
+        "size": 67405,
+        "candidate_roles": []
+      },
+      {
+        "path": "tests/release-and-build-workflow-test-prompts.md",
+        "sha256": "b6aea7a2e03f17128e0e06e4d4e1fab1c7fc8a0a235b2023346f0b8ce720970f",
+        "size": 1546,
+        "candidate_roles": []
+      }
+    ],
+    "candidates": {
+      "instruction_candidate": [
+        "assistant/instructions.md"
+      ],
+      "knowledge_candidate": [
+        "docs/claude-opencode-compatibility.md",
+        "docs/gpt-builder-1.5-runtime-migration.md",
+        "docs/openai-plugin-compatibility.md",
+        "knowledge/blindtest-and-rule-clarity-guide.md",
+        "knowledge/boardgame-project-standard.md",
+        "knowledge/component-design-guide.md",
+        "knowledge/component-economy-and-production-tradeoffs.md",
+        "knowledge/example-project-pattern.md",
+        "knowledge/existing-game-analysis-framework.md",
+        "knowledge/first-time-designer-guided-workflow.md",
+        "knowledge/game-category-patterns.md",
+        "knowledge/gpt-role-and-working-style.md",
+        "knowledge/llm-boardgame-design-workflow.md",
+        "knowledge/mechanics-and-balance-patterns.md",
+        "knowledge/playtest-and-balancing-guide.md",
+        "knowledge/print-and-play-production-guide.md",
+        "knowledge/release-and-build-workflow.md",
+        "knowledge/rulebook-structure-standard.md"
+      ],
+      "script_candidate": [
+        "scripts/build_distributions.py",
+        "scripts/validate_claude_opencode_compatibility.py",
+        "scripts/validate_distributions.py",
+        "scripts/validate_gpt_builder_1_5_contract.py",
+        "scripts/validate_gpt_builder_1_5_migration.py",
+        "scripts/validate_openai_plugin_compatibility.py",
+        "scripts/validate_runtime_distribution_registry.py"
+      ],
+      "configuration_candidate": [
+        ".github/workflows/build-distributions.yml",
+        "gpt-builder-1.5-contract.yaml",
+        "gpt-project.yaml",
+        "migration-status-1.5.yaml",
+        "reconstructed-canonical/plugin-migration-plan.json",
+        "runtime-distribution-registry.yaml"
+      ]
+    },
+    "analysis_contract": {
+      "purpose": "Classify project behavior, knowledge, dependencies and workflows based on evidence",
+      "evidence_rule": "Every proposed fact must cite a source_files.path and SHA-256",
+      "uncertainty_rule": "Mark unresolved source ambiguity for review; do not invent behavior",
+      "output": "platform-neutral reviewed project model before runtime configuration"
+    },
+    "release_ready": false,
+    "runtime_activated": false
+  },
+  "project_hygiene": {
+    "status": "review_required",
+    "missing_documents": [
+      "PROJECT.md",
+      "STATUS.md",
+      "docs/development-plan.md"
+    ],
+    "possible_stale_versions": [],
+    "ci_references_to_reconcile": [],
+    "legacy_validator_candidates": [],
+    "broken_document_links": [],
+    "open_development_checklist_items": [],
+    "open_migration_checklists": [],
+    "unresolved_status_claims": [],
+    "files_deleted": [],
+    "documentation_modified": false,
+    "required_actions": [
+      "Update README, PROJECT, STATUS, development plan and migration checklist together.",
+      "Compare legacy validator behavior with canonical checks before deleting any file.",
+      "Reconcile CI identifiers and actual validation evidence; do not claim host parity from ZIP builds.",
+      "Verify no documentation points at removed paths before release."
+    ]
+  },
+  "migration_steps": [
+    {
+      "id": "inventory",
+      "title": "Inventera källprojekt",
+      "status": "completed"
+    },
+    {
+      "id": "model",
+      "title": "Granska projektmodell och runtime-mappning",
+      "status": "completed"
+    },
+    {
+      "id": "engine",
+      "title": "Bedöm och installera kanonisk byggmotor",
+      "status": "pending_or_blocked"
+    },
+    {
+      "id": "distributions",
+      "title": "Bygg och kontrollera fem distributioner",
+      "status": "pending_or_blocked"
+    },
+    {
+      "id": "hygiene",
+      "title": "Uppdatera dokumentation och granska äldre filer",
+      "status": "review_required"
+    },
+    {
+      "id": "release",
+      "title": "Slutverifiera runtime och release",
+      "status": "pending"
+    }
+  ],
+  "next_step": {
+    "id": "engine",
+    "title": "Bedöm och installera kanonisk byggmotor"
+  }
+}

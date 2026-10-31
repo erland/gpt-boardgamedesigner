@@ -1,0 +1,17 @@
+{
+  "migration_engine": "1.6.33",
+  "project_version": "1.0.0",
+  "source_preservation": {
+    "checked_files": 17,
+    "byte_identical": true,
+    "failed": []
+  },
+  "engine_selftest": "PASS",
+  "canonical_project_lint": "PASS 0 errors 127 warnings",
+  "distribution_build": "PASS six archives",
+  "distribution_validation": "PASS",
+  "final_project_hygiene": "WARNING nonblocking",
+  "host_runtime_tests": "NOT VERIFIED",
+  "release_ready": false,
+  "next_step": "Funktionella acceptanstester i Chat, Claude Projects/Skills, OpenCode, Plugin; granska lintvarningar och CI."
+}
