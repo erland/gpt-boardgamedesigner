@@ -53,6 +53,8 @@ jobs:
       - run: python scripts/validate_distributions.py
       - name: Verify canonical modular Skill packaging
         run: python scripts/validate_modular_skills_packaging.py
+      - name: Verify modular Skill behavior content
+        run: python scripts/verify_modular_content.py
       - name: G03 project ZIP inventory fixture tests
         run: python3 -m unittest discover -s tests -p 'test_g03_zip_inventory.py' -v
       - name: Export G03 host-test ZIP fixture
@@ -69,6 +71,7 @@ jobs:
           path: |
             dist/*.zip
             build/acceptance-preflight.json
+            build/modular-content-evidence.json
       - name: Attach distributions to published release
         if: github.event_name == 'release'
         env:
